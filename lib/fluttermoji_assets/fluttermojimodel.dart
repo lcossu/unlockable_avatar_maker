@@ -50,19 +50,35 @@ const String emptySVGIcon = '''
 ''';
 
 const Map<String, int> defaultFluttermojiOptions = {
-  'topType': 24,
+  'topType': 6,
   'accessoriesType': 0,
   'hairColor': 1,
   'facialHairType': 0,
   'facialHairColor': 1,
-  'clotheType': 4,
-  'eyeType': 6,
-  'eyebrowType': 10,
-  'mouthType': 8,
+  'clotheType': 0,
+  'eyeType': 0,
+  'eyebrowType': 0,
+  'mouthType': 10,
   'skinColor': 3,
-  'clotheColor': 8,
+  'clotheColor': 0,
   'style': 0,
   'graphicType': 0
+};
+
+ Map<String, List<bool>> defaultUnlockedOptions = {
+  'style': List.filled(FluttermojiStyle.length, false),
+  'topType': List.filled(TopType.length, false),
+  'accessoriesType': List.filled(AccessoriesType.length, false),
+  'hairColor': List.filled(HairColor.length, false),
+  'facialHairType': List.filled(FacialHairType.length, false),
+  'facialHairColor': List.filled(FacialHairColor.length, false),
+  'clotheType': List.filled(ClotheType.length, false),
+  'clotheColor': List.filled(ClotheColor.length, false),
+  'eyeType': List.filled(EyeType.length, false),
+  'eyebrowType': List.filled(EyebrowType.length, false),
+  'mouthType': List.filled(MouthType.length, false),
+  'skinColor': List.filled(SkinColor.length, true),
+  'graphicType': List.filled(GraphicType.length, false),
 };
 
 const List<String> FluttermojiStyle = [

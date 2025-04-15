@@ -115,7 +115,7 @@ class NewPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: FluttermojiCircleAvatar(
                   radius: 100,
-                  backgroundColor: Colors.grey[200],
+                  //backgroundColor: Colors.grey[200],
                 ),
               ),
               SizedBox(
@@ -137,6 +137,19 @@ class NewPage extends StatelessWidget {
                 child: FluttermojiCustomizer(
                   scaffoldWidth: min(600, _width * 0.85),
                   autosave: false,
+                  buildUnlockDialog: (p0, p1) => AlertDialog.adaptive(
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: Text('Ok'),
+                      ),
+                    ],
+                    title: Text('Unlock $p0, ${p1.key}'),
+                  ),
                   theme: FluttermojiThemeData(
                       boxDecoration: BoxDecoration(boxShadow: [BoxShadow()])),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttermoji/default_unlock_dialog.dart';
 import 'package:fluttermoji/defaults.dart';
 import 'package:fluttermoji/fluttermojiSaveWidget.dart';
 import 'package:fluttermoji/fluttermojiThemeData.dart';
@@ -34,6 +35,7 @@ class FluttermojiCustomizer extends StatefulWidget {
     FluttermojiThemeData? theme,
     List<String>? attributeTitles,
     List<String>? attributeIcons,
+    this.buildUnlockDialog = buildDefaultUnlockDialog,
     this.autosave = true,
   })  : assert(
           attributeTitles == null || attributeTitles.length == attributesCount,
@@ -87,6 +89,11 @@ class FluttermojiCustomizer extends StatefulWidget {
 
   static const int attributesCount = 11;
 
+  /// widget builder for the unlock dialog. Index is the element's index
+  /// in the attribute grid, attribute is the type of element.
+  /// Should return true if unlock is to be performed and false/Null if not.
+  final Widget Function(int index, AttributeItem attribute) buildUnlockDialog;
+
   @override
   _FluttermojiCustomizerState createState() => _FluttermojiCustomizerState();
 }
@@ -123,13 +130,24 @@ class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
     super.dispose();
   }
 
-  void onTapOption(int index, int? i, AttributeItem attribute) {
+  void onTapOption(int index, int? i, AttributeItem attribute) async {
     if (index != i) {
-      setState(() {
-        fluttermojiController.selectedOptions[attribute.key] = index;
-      });
-      fluttermojiController.updatePreview();
-      if (widget.autosave) fluttermojiController.setFluttermoji();
+      if (fluttermojiController.unlockedElements[attribute.key]![index]) {
+        setState(() {
+          fluttermojiController.selectedOptions[attribute.key] = index;
+        });
+        fluttermojiController.updatePreview();
+        if (widget.autosave) fluttermojiController.setFluttermoji();
+      } else {
+        bool? go = await showDialog(
+          context: context,
+          builder: (context) => widget.buildUnlockDialog(index, attribute),
+        );
+        if (go != null && go)
+          setState(() {
+            fluttermojiController.unlockElement(attribute, index);
+          });
+      }
     }
   }
 
@@ -268,14 +286,21 @@ class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
                 : widget.theme.unselectedTileDecoration,
             margin: widget.theme.tileMargin,
             padding: widget.theme.tilePadding,
-            child: SvgPicture.string(
-              fluttermojiController.getComponentSVG(attribute.key, index),
-              height: 20,
-              semanticsLabel: 'Your Fluttermoji',
-              placeholderBuilder: (context) => Center(
-                child: CupertinoActivityIndicator(),
+            child: Stack(children: [
+              Positioned.fill(
+                child: SvgPicture.string(
+                  fluttermojiController.getComponentSVG(attribute.key, index),
+                  height: 20,
+                  semanticsLabel: 'Your Fluttermoji',
+                  placeholderBuilder: (context) => Center(
+                    child: CupertinoActivityIndicator(),
+                  ),
+                ),
               ),
-            ),
+              if (!fluttermojiController
+                  .unlockedElements[attribute.key]![index])
+                Positioned(top: 1, child: Icon(Icons.lock))
+            ]),
           ),
         ),
       );

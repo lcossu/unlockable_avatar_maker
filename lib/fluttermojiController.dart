@@ -29,6 +29,7 @@ class FluttermojiController extends GetxController {
   /// Eg: selectedIndexes["eyes"] gives the index of
   /// the kind of eyes picked by the user
   Map<String?, dynamic> selectedOptions = <String?, dynamic>{};
+  Map<String?, List<dynamic>> unlockedElements = <String?, List<dynamic>>{};
 
   @override
   void onInit() {
@@ -38,11 +39,49 @@ class FluttermojiController extends GetxController {
   }
 
   void init() async {
+    // Load selected options
     Map<String?, int> _tempIndexes = await getFluttermojiOptions();
     selectedOptions = _tempIndexes;
+
+    // Load unlocked options
+    Map<String?, List<dynamic>> _temp = await getFluttermojiUnlocks();
+    unlockedElements = _temp;
+
     update();
     fluttermoji.value = getFluttermojiFromOptions();
     update();
+  }
+
+  Future<Map<String?, List<dynamic>>> getFluttermojiUnlocks() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? _unlockedOptions = pref.getString('fluttermojiUnlockedOptions');
+    if (_unlockedOptions == null || _unlockedOptions.isEmpty) {
+      // If no unlocked options are saved, use the defaultUnlockedOptions
+      Map<String?, List<bool>> _unlockedElements = Map();
+      _unlockedElements = Map.from(defaultUnlockedOptions);
+      _unlockedElements['topType']![2] = true;
+      _unlockedElements['topType']![6] = true;
+      _unlockedElements['topType']![14] = true;
+      _unlockedElements['hairColor']![1] = true;
+      _unlockedElements['hairColor']![4] = true;
+      _unlockedElements['facialHairColor']![1] = true;
+      _unlockedElements['facialHairColor']![4] = true;
+      _unlockedElements['clotheType']![0] = true;
+      _unlockedElements['clotheColor']![0] = true;
+      _unlockedElements['eyeType']![0] = true;
+      _unlockedElements['eyebrowType']![0] = true;
+      _unlockedElements['mouthType']![10] = true;
+      _unlockedElements['accessoriesType']![0] = true;
+      await pref.setString(
+          'fluttermojiUnlockedOptions', jsonEncode(_unlockedElements));
+      update();
+      return _unlockedElements;
+    }
+    // Load the saved unlocked options
+    unlockedElements = Map.from(jsonDecode(_unlockedOptions));
+    update();
+
+    return Map.from(jsonDecode(_unlockedOptions));
   }
 
   /// Adds fluttermoji new string to fluttermoji in GetX Controller
@@ -53,6 +92,38 @@ class FluttermojiController extends GetxController {
       fluttermojiNew = getFluttermojiFromOptions();
     }
     fluttermoji.value = fluttermojiNew;
+    update();
+  }
+
+  /// Unlocks an element in the customizer
+  void unlockElement(AttributeItem attribute, int index) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    unlockedElements[attribute.key]![index] = true;
+    await pref.setString(
+        'fluttermojiUnlockedOptions', jsonEncode(unlockedElements));
+    update();
+  }
+  
+  // Unlocks all elements in the customizer
+  void unlockAll() async {
+    unlockedElements = {
+      'style': List.filled(FluttermojiStyle.length, true),
+      'topType': List.filled(TopType.length, true),
+      'accessoriesType': List.filled(AccessoriesType.length, true),
+      'hairColor': List.filled(HairColor.length, true),
+      'facialHairType': List.filled(FacialHairType.length, true),
+      'facialHairColor': List.filled(FacialHairColor.length, true),
+      'clotheType': List.filled(ClotheType.length, true),
+      'clotheColor': List.filled(ClotheColor.length, true),
+      'eyeType': List.filled(EyeType.length, true),
+      'eyebrowType': List.filled(EyebrowType.length, true),
+      'mouthType': List.filled(MouthType.length, true),
+      'skinColor': List.filled(SkinColor.length, true),
+      'graphicType': List.filled(GraphicType.length, true),
+    };
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString(
+        'fluttermojiUnlockedOptions', jsonEncode(unlockedElements));
     update();
   }
 
