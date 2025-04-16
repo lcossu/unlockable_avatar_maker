@@ -72,6 +72,7 @@ class AvatarMakerController extends GetxController {
       _unlockedElements['eyebrowType']![0] = true;
       _unlockedElements['mouthType']![10] = true;
       _unlockedElements['accessoriesType']![0] = true;
+      _unlockedElements['background']![2] = true;
       await pref.setString(
           'avatarMakerUnlockedOptions', jsonEncode(_unlockedElements));
       update();
