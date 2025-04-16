@@ -9,7 +9,7 @@ import 'avatarMaker_assets/face/mouth/mouth.dart';
 import 'avatarMaker_assets/face/nose/nose.dart';
 import 'avatarMaker_assets/avatarmakermodel.dart';
 import 'avatarMaker_assets/skin.dart';
-import 'avatarMaker_assets/style.dart';
+import 'avatarMaker_assets/background.dart';
 import 'avatarMaker_assets/top/accessories/accessories.dart';
 import 'avatarMaker_assets/top/facialHair/facialHair.dart';
 import 'avatarMaker_assets/top/hairStyles/hairStyle.dart';

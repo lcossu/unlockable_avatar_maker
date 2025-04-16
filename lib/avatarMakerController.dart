@@ -1,5 +1,5 @@
 import 'dart:convert';
-import './avatarMaker_assets/style.dart';
+import './avatarMaker_assets/background.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'avatarMakerFunctions.dart';
@@ -116,7 +116,7 @@ class AvatarMakerController extends GetxController {
   // Unlocks all elements in the customizer
   void unlockAll() async {
     unlockedElements = {
-      'style': List.filled(AvatarMakerBackgroundType.length, true),
+      'background': List.filled(AvatarMakerBackgroundType.length, true),
       'topType': List.filled(TopType.length, true),
       'accessoriesType': List.filled(AccessoriesType.length, true),
       'hairColor': List.filled(HairColor.length, true),
