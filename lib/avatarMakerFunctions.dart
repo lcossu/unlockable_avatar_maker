@@ -54,8 +54,8 @@ class AvatarMakerFunctions {
   String decodeAvatarMakerfromString(String encodedData) {
     if (encodedData != '') _decodedList = Map.from(jsonDecode(encodedData));
 
-    String _avatarMakerStyle =
-        AvatarMakerBackground.generateBackground(backgroundColor:_getAvatarMakerProperty('background'));
+    String _avatarMakerStyle = AvatarMakerBackground.generateBackground(
+        backgroundColor: _getAvatarMakerProperty('background'));
     String _clothe = Clothes.generateClothes(
         clotheType: _getAvatarMakerProperty('clotheType'),
         clColor: _getAvatarMakerProperty('clotheColor'))!;

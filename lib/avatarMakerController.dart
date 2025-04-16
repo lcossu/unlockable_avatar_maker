@@ -105,6 +105,14 @@ class AvatarMakerController extends GetxController {
     update();
   }
 
+  /// Allows to restore previous unlocks by providing the old json string.
+  /// Useful after app reinstallations
+  Future<void> restoreUnlocks(String unlocks) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString('avatarMakerUnlockedOptions', unlocks);
+    update();
+  }
+
   // Unlocks all elements in the customizer
   void unlockAll() async {
     unlockedElements = {
