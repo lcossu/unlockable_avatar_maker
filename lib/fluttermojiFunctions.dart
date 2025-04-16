@@ -55,7 +55,7 @@ class FluttermojiFunctions {
     if (encodedData != '') _decodedList = Map.from(jsonDecode(encodedData));
 
     String _fluttermojiStyle =
-        fluttermojiStyle[_getFluttermojiProperty('style')]!;
+        FluttermojiBackground.generateBackground(backgroundColor:_getFluttermojiProperty('background'));
     String _clothe = Clothes.generateClothes(
         clotheType: _getFluttermojiProperty('clotheType'),
         clColor: _getFluttermojiProperty('clotheColor'))!;

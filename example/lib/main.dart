@@ -114,7 +114,7 @@ class NewPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: FluttermojiCircleAvatar(
-                  radius: 100,
+                  radius: 200,
                   //backgroundColor: Colors.grey[200],
                 ),
               ),

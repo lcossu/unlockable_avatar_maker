@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 /// Maps attribute keys to the attribute value list
 final Map<String, FluttermojiPropertyItem> fluttermojiProperties = {
-  "style": FluttermojiPropertyItem(title: "Style", property: FluttermojiStyle),
+  "background": FluttermojiPropertyItem(title: "Background", property: FluttermojiBackgroundType),
   "topType": FluttermojiPropertyItem(title: "Hair", property: TopType),
   "accessoriesType":
       FluttermojiPropertyItem(title: "Accessory", property: AccessoriesType),
@@ -61,12 +61,12 @@ const Map<String, int> defaultFluttermojiOptions = {
   'mouthType': 10,
   'skinColor': 3,
   'clotheColor': 0,
-  'style': 0,
+  'background': 2,
   'graphicType': 0
 };
 
- Map<String, List<bool>> defaultUnlockedOptions = {
-  'style': List.filled(FluttermojiStyle.length, false),
+Map<String, List<bool>> defaultUnlockedOptions = {
+  'background': List.filled(FluttermojiBackgroundType.length, false),
   'topType': List.filled(TopType.length, false),
   'accessoriesType': List.filled(AccessoriesType.length, false),
   'hairColor': List.filled(HairColor.length, false),
@@ -81,9 +81,23 @@ const Map<String, int> defaultFluttermojiOptions = {
   'graphicType': List.filled(GraphicType.length, false),
 };
 
-const List<String> FluttermojiStyle = [
-  'Transparent',
-  'Circle',
+List<String> FluttermojiBackgroundType = [
+  'Blue01',
+  'Blue02',
+  'PastelYellow',
+  'PastelGreen',
+  'Gray02',
+  'Black',
+  'Blue03',
+  'Gray01',
+  'Heather',
+  'PastelBlue',
+  'PastelOrange',
+  'PastelRed',
+  'Pink',
+  'Red',
+  'White',
+  'Transparent'
 ];
 
 const List<String> TopType = [

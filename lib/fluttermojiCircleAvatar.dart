@@ -18,10 +18,11 @@ class FluttermojiCircleAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (backgroundColor == null)
-      CircleAvatar(radius: radius, child: buildGetX());
-    return CircleAvatar(
-        radius: radius, backgroundColor: backgroundColor, child: buildGetX());
+    //if (backgroundColor == null)
+    return buildGetX();
+    //CircleAvatar(radius: radius, child: buildGetX());
+    // return CircleAvatar(
+    //     radius: radius, backgroundColor: backgroundColor, child: buildGetX());
   }
 
   GetX<FluttermojiController> buildGetX() {
@@ -34,7 +35,7 @@ class FluttermojiCircleAvatar extends StatelessWidget {
           }
           return SvgPicture.string(
             snapshot.fluttermoji.value,
-            height: radius * 1.6,
+            height: radius,
             semanticsLabel: "Your Fluttermoji",
             placeholderBuilder: (context) => Center(
               child: CupertinoActivityIndicator(),
