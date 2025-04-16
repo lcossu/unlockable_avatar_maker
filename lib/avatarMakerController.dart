@@ -1,26 +1,26 @@
 import 'dart:convert';
-import './fluttermoji_assets/style.dart';
+import './avatarMaker_assets/style.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'fluttermojiFunctions.dart';
-import 'fluttermoji_assets/fluttermojimodel.dart';
-import 'fluttermoji_assets/clothes/clothes.dart';
-import 'fluttermoji_assets/face/eyebrow/eyebrow.dart';
-import 'fluttermoji_assets/face/eyes/eyes.dart';
-import 'fluttermoji_assets/face/mouth/mouth.dart';
-import 'fluttermoji_assets/face/nose/nose.dart';
-import 'fluttermoji_assets/skin.dart';
-import 'fluttermoji_assets/top/accessories/accessories.dart';
-import 'fluttermoji_assets/top/facialHair/facialHair.dart';
-import 'fluttermoji_assets/top/hairStyles/hairStyle.dart';
+import 'avatarMakerFunctions.dart';
+import 'avatarMaker_assets/avatarMakermodel.dart';
+import 'avatarMaker_assets/clothes/clothes.dart';
+import 'avatarMaker_assets/face/eyebrow/eyebrow.dart';
+import 'avatarMaker_assets/face/eyes/eyes.dart';
+import 'avatarMaker_assets/face/mouth/mouth.dart';
+import 'avatarMaker_assets/face/nose/nose.dart';
+import 'avatarMaker_assets/skin.dart';
+import 'avatarMaker_assets/top/accessories/accessories.dart';
+import 'avatarMaker_assets/top/facialHair/facialHair.dart';
+import 'avatarMaker_assets/top/hairStyles/hairStyle.dart';
 
-/// Brains of the Fluttermoji package
+/// Brains of the AvatarMaker package
 ///
 /// Built using the getX architecture to allow the two widgets to communicate with each other
 ///
 /// Exposes certain static functions for use by the developer
-class FluttermojiController extends GetxController {
-  var fluttermoji = "".obs;
+class AvatarMakerController extends GetxController {
+  var avatarMaker = "".obs;
 
   /// Stores the option selected by the user for each attribute
   /// where the key represents the Attribute
@@ -40,21 +40,21 @@ class FluttermojiController extends GetxController {
 
   void init() async {
     // Load selected options
-    Map<String?, int> _tempIndexes = await getFluttermojiOptions();
+    Map<String?, int> _tempIndexes = await getAvatarMakerOptions();
     selectedOptions = _tempIndexes;
 
     // Load unlocked options
-    Map<String?, List<dynamic>> _temp = await getFluttermojiUnlocks();
+    Map<String?, List<dynamic>> _temp = await getAvatarMakerUnlocks();
     unlockedElements = _temp;
 
     update();
-    fluttermoji.value = getFluttermojiFromOptions();
+    avatarMaker.value = getAvatarMakerFromOptions();
     update();
   }
 
-  Future<Map<String?, List<dynamic>>> getFluttermojiUnlocks() async {
+  Future<Map<String?, List<dynamic>>> getAvatarMakerUnlocks() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String? _unlockedOptions = pref.getString('fluttermojiUnlockedOptions');
+    String? _unlockedOptions = pref.getString('avatarMakerUnlockedOptions');
     if (_unlockedOptions == null || _unlockedOptions.isEmpty) {
       // If no unlocked options are saved, use the defaultUnlockedOptions
       Map<String?, List<bool>> _unlockedElements = Map();
@@ -73,7 +73,7 @@ class FluttermojiController extends GetxController {
       _unlockedElements['mouthType']![10] = true;
       _unlockedElements['accessoriesType']![0] = true;
       await pref.setString(
-          'fluttermojiUnlockedOptions', jsonEncode(_unlockedElements));
+          'avatarMakerUnlockedOptions', jsonEncode(_unlockedElements));
       update();
       return _unlockedElements;
     }
@@ -84,14 +84,14 @@ class FluttermojiController extends GetxController {
     return Map.from(jsonDecode(_unlockedOptions));
   }
 
-  /// Adds fluttermoji new string to fluttermoji in GetX Controller
+  /// Adds avatarMaker new string to avatarMaker in GetX Controller
   void updatePreview({
-    String fluttermojiNew = '',
+    String avatarMakerNew = '',
   }) {
-    if (fluttermojiNew.isEmpty) {
-      fluttermojiNew = getFluttermojiFromOptions();
+    if (avatarMakerNew.isEmpty) {
+      avatarMakerNew = getAvatarMakerFromOptions();
     }
-    fluttermoji.value = fluttermojiNew;
+    avatarMaker.value = avatarMakerNew;
     update();
   }
 
@@ -100,14 +100,14 @@ class FluttermojiController extends GetxController {
     SharedPreferences pref = await SharedPreferences.getInstance();
     unlockedElements[attribute.key]![index] = true;
     await pref.setString(
-        'fluttermojiUnlockedOptions', jsonEncode(unlockedElements));
+        'avatarMakerUnlockedOptions', jsonEncode(unlockedElements));
     update();
   }
 
   // Unlocks all elements in the customizer
   void unlockAll() async {
     unlockedElements = {
-      'style': List.filled(FluttermojiBackgroundType.length, true),
+      'style': List.filled(AvatarMakerBackgroundType.length, true),
       'topType': List.filled(TopType.length, true),
       'accessoriesType': List.filled(AccessoriesType.length, true),
       'hairColor': List.filled(HairColor.length, true),
@@ -123,68 +123,68 @@ class FluttermojiController extends GetxController {
     };
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString(
-        'fluttermojiUnlockedOptions', jsonEncode(unlockedElements));
+        'avatarMakerUnlockedOptions', jsonEncode(unlockedElements));
     update();
   }
 
   /// Restore controller state
-  /// with the latest SAVED version of [fluttermoji] and [selectedOptions]
+  /// with the latest SAVED version of [avatarMaker] and [selectedOptions]
   void restoreState() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    // Replace observable [fluttermoji] with latest saved version or use default attributes if null
-    fluttermoji.value = pref.getString('fluttermoji') ??
-        FluttermojiFunctions().decodeFluttermojifromString(
-          jsonEncode(defaultFluttermojiOptions),
+    // Replace observable [avatarMaker] with latest saved version or use default attributes if null
+    avatarMaker.value = pref.getString('avatarMaker') ??
+        AvatarMakerFunctions().decodeAvatarMakerfromString(
+          jsonEncode(defaultAvatarMakerOptions),
         );
 
-    selectedOptions = await getFluttermojiOptions();
+    selectedOptions = await getAvatarMakerOptions();
     update();
   }
 
-  String _getFluttermojiProperty(String type) {
-    return fluttermojiProperties[type]!
+  String _getAvatarMakerProperty(String type) {
+    return avatarMakerProperties[type]!
         .property!
         .elementAt(selectedOptions[type] as int);
   }
 
-  ///  Accepts a String [fluttermoji]
+  ///  Accepts a String [avatarMaker]
   ///
-  ///  stores [fluttermoji] in device storage
+  ///  stores [avatarMaker] in device storage
   ///  adds the new name to controller
   ///
   ///  Thereby updating all the states which are listening to controller
-  Future<void> setFluttermoji({String fluttermojiNew = ''}) async {
-    if (fluttermojiNew.isEmpty) {
-      fluttermojiNew = getFluttermojiFromOptions();
+  Future<void> setAvatarMaker({String avatarMakerNew = ''}) async {
+    if (avatarMakerNew.isEmpty) {
+      avatarMakerNew = getAvatarMakerFromOptions();
     }
     SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString('fluttermoji', fluttermojiNew);
-    fluttermoji.value = fluttermojiNew;
+    await pref.setString('avatarMaker', avatarMakerNew);
+    avatarMaker.value = avatarMakerNew;
     await pref.setString(
-        'fluttermojiSelectedOptions', jsonEncode(selectedOptions));
+        'avatarMakerSelectedOptions', jsonEncode(selectedOptions));
     update();
   }
 
-  /// Generates a [String] fluttermoji from [selectedOptions] pref
-  String getFluttermojiFromOptions() {
-    String _fluttermojiStyle = FluttermojiBackground.generateBackground(
-        backgroundColor: _getFluttermojiProperty('background'));
+  /// Generates a [String] avatarMaker from [selectedOptions] pref
+  String getAvatarMakerFromOptions() {
+    String _avatarMakerStyle = AvatarMakerBackground.generateBackground(
+        backgroundColor: _getAvatarMakerProperty('background'));
     String _clothe = Clothes.generateClothes(
-        clotheType: _getFluttermojiProperty('clotheType'),
-        clColor: _getFluttermojiProperty('clotheColor'))!;
+        clotheType: _getAvatarMakerProperty('clotheType'),
+        clColor: _getAvatarMakerProperty('clotheColor'))!;
     String _facialhair = FacialHair.generateFacialHair(
-        facialHairType: _getFluttermojiProperty('facialHairType'),
-        fhColor: _getFluttermojiProperty('facialHairColor'))!;
-    String _mouth = mouth['${_getFluttermojiProperty('mouthType')}'];
+        facialHairType: _getAvatarMakerProperty('facialHairType'),
+        fhColor: _getAvatarMakerProperty('facialHairColor'))!;
+    String _mouth = mouth['${_getAvatarMakerProperty('mouthType')}'];
     String _nose = nose['Default'];
-    String _eyes = eyes['${_getFluttermojiProperty('eyeType')}'];
-    String _eyebrows = eyebrow['${_getFluttermojiProperty('eyebrowType')}'];
-    String _accessory = accessories[_getFluttermojiProperty('accessoriesType')];
+    String _eyes = eyes['${_getAvatarMakerProperty('eyeType')}'];
+    String _eyebrows = eyebrow['${_getAvatarMakerProperty('eyebrowType')}'];
+    String _accessory = accessories[_getAvatarMakerProperty('accessoriesType')];
     String _hair = HairStyle.generateHairStyle(
-        hairType: _getFluttermojiProperty('topType'),
-        hColor: _getFluttermojiProperty('hairColor'))!;
-    String _skin = skin[_getFluttermojiProperty('skinColor')];
+        hairType: _getAvatarMakerProperty('topType'),
+        hColor: _getAvatarMakerProperty('hairColor'))!;
+    String _skin = skin[_getAvatarMakerProperty('skinColor')];
     String _completeSVG = '''
 <svg width="264px" height="280px" viewBox="0 0 264 280" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <desc>
@@ -198,9 +198,9 @@ class FluttermojiController extends GetxController {
 <g id="Avataaar" stroke="none" stroke-width="1" fill="none" fill-rule="all">
     <g transform="translate(-825.000000, -1100.000000)" id="Avataaar/Circle">
       <g transform="translate(825.000000, 1100.000000)">
-        $_fluttermojiStyle
+        $_avatarMakerStyle
 <g id="Mask"></g>
-<g id="Fluttermoji" stroke-width="1" fill-rule="evenodd" mask="url(#react-mask-5)">
+<g id="AvatarMaker" stroke-width="1" fill-rule="evenodd" mask="url(#react-mask-5)">
           <g id="Body" transform="translate(32.000000, 36.000000)">
             <mask id="react-mask-6" fill="white">
               <use xlink:href="#react-path-3"/>
@@ -222,26 +222,26 @@ class FluttermojiController extends GetxController {
     return _completeSVG;
   }
 
-  Future<Map<String?, int>> getFluttermojiOptions() async {
+  Future<Map<String?, int>> getAvatarMakerOptions() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String? _fluttermojiOptions = pref.getString('fluttermojiSelectedOptions');
-    if (_fluttermojiOptions == null || _fluttermojiOptions == '') {
-      Map<String?, int> _fluttermojiOptionsMap =
-          Map.from(defaultFluttermojiOptions);
+    String? _avatarMakerOptions = pref.getString('avatarMakerSelectedOptions');
+    if (_avatarMakerOptions == null || _avatarMakerOptions == '') {
+      Map<String?, int> _avatarMakerOptionsMap =
+          Map.from(defaultAvatarMakerOptions);
       await pref.setString(
-          'fluttermojiSelectedOptions', jsonEncode(_fluttermojiOptionsMap));
-      selectedOptions = _fluttermojiOptionsMap;
+          'avatarMakerSelectedOptions', jsonEncode(_avatarMakerOptionsMap));
+      selectedOptions = _avatarMakerOptionsMap;
 
       update();
-      return _fluttermojiOptionsMap;
+      return _avatarMakerOptionsMap;
     }
-    selectedOptions = Map.from(jsonDecode(_fluttermojiOptions));
+    selectedOptions = Map.from(jsonDecode(_avatarMakerOptions));
     update();
-    return Map.from(jsonDecode(_fluttermojiOptions));
+    return Map.from(jsonDecode(_avatarMakerOptions));
   }
 
   String? getComponentTitle(String attributeKey, int attriibuteValueIndex) {
-    return fluttermojiProperties[attributeKey]!
+    return avatarMakerProperties[attributeKey]!
         .property
         ?.elementAt(attriibuteValueIndex);
   }
@@ -358,7 +358,7 @@ class FluttermojiController extends GetxController {
   <g id="Avataaar" stroke="none" stroke-width="1" fill="none" fill-rule="all">
     <g transform="translate(-825.000000, -1100.000000)" id="Avataaar/Circle">
       <g transform="translate(825.000000, 1100.000000)">
-      ${FluttermojiBackground.generateBackground(backgroundColor: FluttermojiBackgroundType[attributeValueIndex!])}
+      ${AvatarMakerBackground.generateBackground(backgroundColor: AvatarMakerBackgroundType[attributeValueIndex!])}
         <g id="Mask" class=""/>
         <g id="Avataaar" stroke-width="1" fill-rule="evenodd" mask="url(#react-mask-5)">
           <g id="Body" transform="translate(32.000000, 36.000000)">

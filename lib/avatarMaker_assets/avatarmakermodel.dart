@@ -1,30 +1,30 @@
 import 'package:flutter/foundation.dart';
 
 /// Maps attribute keys to the attribute value list
-final Map<String, FluttermojiPropertyItem> fluttermojiProperties = {
-  "background": FluttermojiPropertyItem(title: "Background", property: FluttermojiBackgroundType),
-  "topType": FluttermojiPropertyItem(title: "Hair", property: TopType),
+final Map<String, AvatarMakerPropertyItem> avatarMakerProperties = {
+  "background": AvatarMakerPropertyItem(title: "Background", property: AvatarMakerBackgroundType),
+  "topType": AvatarMakerPropertyItem(title: "Hair", property: TopType),
   "accessoriesType":
-      FluttermojiPropertyItem(title: "Accessory", property: AccessoriesType),
+      AvatarMakerPropertyItem(title: "Accessory", property: AccessoriesType),
   "hairColor":
-      FluttermojiPropertyItem(title: "Hair\nColor", property: HairColor),
+      AvatarMakerPropertyItem(title: "Hair\nColor", property: HairColor),
   "facialHairType":
-      FluttermojiPropertyItem(title: "Facial\nHair", property: FacialHairType),
-  "facialHairColor": FluttermojiPropertyItem(
+      AvatarMakerPropertyItem(title: "Facial\nHair", property: FacialHairType),
+  "facialHairColor": AvatarMakerPropertyItem(
       title: "F-Hair\nColor", property: FacialHairColor),
-  "clotheType": FluttermojiPropertyItem(title: "Outfit", property: ClotheType),
+  "clotheType": AvatarMakerPropertyItem(title: "Outfit", property: ClotheType),
   "clotheColor":
-      FluttermojiPropertyItem(title: "Outfit\nColor", property: ClotheColor),
-  "eyeType": FluttermojiPropertyItem(title: "Eye", property: EyeType),
+      AvatarMakerPropertyItem(title: "Outfit\nColor", property: ClotheColor),
+  "eyeType": AvatarMakerPropertyItem(title: "Eye", property: EyeType),
   "eyebrowType":
-      FluttermojiPropertyItem(title: "Eyebrow", property: EyebrowType),
-  "mouthType": FluttermojiPropertyItem(title: "Mouth", property: MouthType),
-  "skinColor": FluttermojiPropertyItem(title: "Skin", property: SkinColor),
+      AvatarMakerPropertyItem(title: "Eyebrow", property: EyebrowType),
+  "mouthType": AvatarMakerPropertyItem(title: "Mouth", property: MouthType),
+  "skinColor": AvatarMakerPropertyItem(title: "Skin", property: SkinColor),
 };
 
 /// Models the metadata needed for rendering widgets in the UI
 ///
-/// 'ExpandedFluttermojiCardItem' has been renamed to Attribute Item
+/// 'ExpandedAvatarMakerCardItem' has been renamed to Attribute Item
 class AttributeItem {
   String title;
   String? key;
@@ -34,11 +34,11 @@ class AttributeItem {
       {this.iconsize, this.title = "Unnamed", this.key, this.iconAsset});
 }
 
-class FluttermojiPropertyItem extends ChangeNotifier {
+class AvatarMakerPropertyItem extends ChangeNotifier {
   String title;
   int choice;
   List<String>? property;
-  FluttermojiPropertyItem({
+  AvatarMakerPropertyItem({
     this.title = "Unnamed",
     this.choice = 0,
     this.property,
@@ -49,7 +49,7 @@ const String emptySVGIcon = '''
 <svg xmlns="http://www.w3.org/2000/svg"  viewBox="-20 -20 80 80" width="80px" height="80px"><path fill="#dff0fe" stroke="#4788c7" stroke-miterlimit="10" d="M20,1C9.507,1,1,9.507,1,20s8.507,19,19,19s19-8.507,19-19 S30.493,1,20,1z M6,20c0-7.732,6.268-14,14-14c2.963,0,5.706,0.926,7.968,2.496L8.496,27.968C6.926,25.706,6,22.963,6,20z M20,34 c-2.963,0-5.706-0.926-7.968-2.496l19.472-19.472C33.074,14.294,34,17.037,34,20C34,27.732,27.732,34,20,34z"/></svg>
 ''';
 
-const Map<String, int> defaultFluttermojiOptions = {
+const Map<String, int> defaultAvatarMakerOptions = {
   'topType': 6,
   'accessoriesType': 0,
   'hairColor': 1,
@@ -66,7 +66,7 @@ const Map<String, int> defaultFluttermojiOptions = {
 };
 
 Map<String, List<bool>> defaultUnlockedOptions = {
-  'background': List.filled(FluttermojiBackgroundType.length, false),
+  'background': List.filled(AvatarMakerBackgroundType.length, false),
   'topType': List.filled(TopType.length, false),
   'accessoriesType': List.filled(AccessoriesType.length, false),
   'hairColor': List.filled(HairColor.length, false),
@@ -81,7 +81,7 @@ Map<String, List<bool>> defaultUnlockedOptions = {
   'graphicType': List.filled(GraphicType.length, false),
 };
 
-List<String> FluttermojiBackgroundType = [
+List<String> AvatarMakerBackgroundType = [
   'Blue01',
   'Blue02',
   'PastelYellow',

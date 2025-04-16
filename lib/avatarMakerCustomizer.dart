@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:unlockable_avatar_maker/avatarMaker_assets/avatarMakermodel.dart';
 import 'package:unlockable_avatar_maker/default_unlock_dialog.dart';
 import 'package:unlockable_avatar_maker/defaults.dart';
-import 'package:unlockable_avatar_maker/fluttermojiSaveWidget.dart';
-import 'package:unlockable_avatar_maker/fluttermojiThemeData.dart';
-import 'fluttermoji_assets/fluttermojimodel.dart';
+import 'package:unlockable_avatar_maker/avatarMakerSaveWidget.dart';
+import 'package:unlockable_avatar_maker/avatarMakerThemeData.dart';
 import 'package:get/get.dart';
-import 'fluttermojiController.dart';
+import 'avatarMakerController.dart';
 
-/// This widget provides the user with a UI for customizing their Fluttermoji
+/// This widget provides the user with a UI for customizing their AvatarMaker
 ///
 ///*****
 ///Note: \
-/// It is advised that a [FluttermojiCircleAvatar] also be present in the same page.
+/// It is advised that a [AvatarMakerCircleAvatar] also be present in the same page.
 /// to show the user a preview of the changes being made.
-class FluttermojiCustomizer extends StatefulWidget {
-  /// Creates a widget UI to customize the Fluttermoji
+class AvatarMakerCustomizer extends StatefulWidget {
+  /// Creates a widget UI to customize the AvatarMaker
   ///
-  /// You may provide a [FluttermojiThemeData] instance to adjust the appearance of this
+  /// You may provide a [AvatarMakerThemeData] instance to adjust the appearance of this
   /// widget to your app's theme.
   ///
   /// Accepts optional [scaffoldHeight] and [scaffoldWidth] attributes
@@ -26,13 +26,13 @@ class FluttermojiCustomizer extends StatefulWidget {
   ///
   ///*****
   ///Note: \
-  /// It is advised that a [FluttermojiCircleAvatar] also be present in the same page.
+  /// It is advised that a [AvatarMakerCircleAvatar] also be present in the same page.
   /// to show the user a preview of the changes being made.
-  FluttermojiCustomizer({
+  AvatarMakerCustomizer({
     Key? key,
     this.scaffoldHeight,
     this.scaffoldWidth,
-    FluttermojiThemeData? theme,
+    AvatarMakerThemeData? theme,
     List<String>? attributeTitles,
     List<String>? attributeIcons,
     this.buildUnlockDialog = buildDefaultUnlockDialog,
@@ -47,7 +47,7 @@ class FluttermojiCustomizer extends StatefulWidget {
           "List of Attribute Icon paths must be of length $attributesCount.\n"
           " You need to provide icon paths for all attributes",
         ),
-        this.theme = theme ?? FluttermojiThemeData.standard,
+        this.theme = theme ?? AvatarMakerThemeData.standard,
         this.attributeTitles = attributeTitles ?? defaultAttributeTitles,
         this.attributeIcons = attributeIcons ?? defaultAttributeIcons,
         super(key: key);
@@ -57,7 +57,7 @@ class FluttermojiCustomizer extends StatefulWidget {
 
   /// Configuration for the overall visual theme for this widget
   /// and the components within it.
-  final FluttermojiThemeData theme;
+  final AvatarMakerThemeData theme;
 
   /// List of titles that are rendered at the top of the widget, indicating
   /// which attribute the user is customizing.
@@ -83,7 +83,7 @@ class FluttermojiCustomizer extends StatefulWidget {
   /// Will save the selection automatically everytime the user selects
   /// something when set to `true` .
   ///
-  /// If set to `false` you may want to implement a [FluttermojiSaveWidget]
+  /// If set to `false` you may want to implement a [AvatarMakerSaveWidget]
   /// in your app to let users save their selection manually.
   final bool autosave;
 
@@ -95,12 +95,12 @@ class FluttermojiCustomizer extends StatefulWidget {
   final Widget Function(int index, AttributeItem attribute) buildUnlockDialog;
 
   @override
-  _FluttermojiCustomizerState createState() => _FluttermojiCustomizerState();
+  _AvatarMakerCustomizerState createState() => _AvatarMakerCustomizerState();
 }
 
-class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
+class _AvatarMakerCustomizerState extends State<AvatarMakerCustomizer>
     with SingleTickerProviderStateMixin {
-  late FluttermojiController fluttermojiController;
+  late AvatarMakerController avatarMakerController;
   late TabController tabController;
   final attributesCount = 12;
   var heightFactor = 0.4, widthFactor = 0.95;
@@ -109,13 +109,13 @@ class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
   void initState() {
     super.initState();
 
-    var _fluttermojiController;
-    Get.put(FluttermojiController());
-    _fluttermojiController = Get.find<FluttermojiController>();
+    var _avatarMakerController;
+    Get.put(AvatarMakerController());
+    _avatarMakerController = Get.find<AvatarMakerController>();
 
     setState(() {
       tabController = TabController(length: attributesCount, vsync: this);
-      fluttermojiController = _fluttermojiController;
+      avatarMakerController = _avatarMakerController;
     });
 
     tabController.addListener(() {
@@ -126,18 +126,18 @@ class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
   @override
   void dispose() {
     // This ensures that unsaved edits are reverted
-    fluttermojiController.restoreState();
+    avatarMakerController.restoreState();
     super.dispose();
   }
 
   void onTapOption(int index, int? i, AttributeItem attribute) async {
     if (index != i) {
-      if (fluttermojiController.unlockedElements[attribute.key]![index]) {
+      if (avatarMakerController.unlockedElements[attribute.key]![index]) {
         setState(() {
-          fluttermojiController.selectedOptions[attribute.key] = index;
+          avatarMakerController.selectedOptions[attribute.key] = index;
         });
-        fluttermojiController.updatePreview();
-        if (widget.autosave) fluttermojiController.setFluttermoji();
+        avatarMakerController.updatePreview();
+        if (widget.autosave) avatarMakerController.setAvatarMaker();
       } else {
         bool? go = await showDialog(
           context: context,
@@ -145,7 +145,7 @@ class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
         );
         if (go != null && go)
           setState(() {
-            fluttermojiController.unlockElement(attribute, index);
+            avatarMakerController.unlockElement(attribute, index);
           });
       }
     }
@@ -246,14 +246,14 @@ class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
         attributeIndex < attributes.length;
         attributeIndex++) {
       var attribute = attributes[attributeIndex];
-      if (!fluttermojiController.selectedOptions.containsKey(attribute.key)) {
-        fluttermojiController.selectedOptions[attribute.key] = 0;
+      if (!avatarMakerController.selectedOptions.containsKey(attribute.key)) {
+        avatarMakerController.selectedOptions[attribute.key] = 0;
       }
 
       /// Number of options available for said [attribute]
       /// Eg: "Hairstyle" attribue has 38 options
       var attributeListLength =
-          fluttermojiProperties[attribute.key!]!.property!.length;
+          avatarMakerProperties[attribute.key!]!.property!.length;
 
       /// Number of tiles per horizontal row,
       int gridCrossAxisCount;
@@ -267,7 +267,7 @@ class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
       else
         gridCrossAxisCount = 4;
 
-      int? i = fluttermojiController.selectedOptions[attribute.key];
+      int? i = avatarMakerController.selectedOptions[attribute.key];
 
       /// Build the main Tile Grid with all the options from the attribute
       var _tileGrid = GridView.builder(
@@ -289,15 +289,15 @@ class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
             child: Stack(children: [
               Positioned.fill(
                 child: SvgPicture.string(
-                  fluttermojiController.getComponentSVG(attribute.key, index),
+                  avatarMakerController.getComponentSVG(attribute.key, index),
                   height: 20,
-                  semanticsLabel: 'Your Fluttermoji',
+                  semanticsLabel: 'Your AvatarMaker',
                   placeholderBuilder: (context) => Center(
                     child: CupertinoActivityIndicator(),
                   ),
                 ),
               ),
-              if (!fluttermojiController
+              if (!avatarMakerController
                   .unlockedElements[attribute.key]![index])
                 Positioned(top: 1, child: Icon(Icons.lock))
             ]),
@@ -310,7 +310,7 @@ class _FluttermojiCustomizerState extends State<FluttermojiCustomizer>
           padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 12),
           child: SvgPicture.asset(
             attribute.iconAsset!,
-            package: 'fluttermoji',
+            package: 'unlockable_avatar_maker',
             height: attribute.iconsize ??
                 (widget.scaffoldHeight != null
                     ? widget.scaffoldHeight! / heightFactor * 0.03

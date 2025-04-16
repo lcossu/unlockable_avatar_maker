@@ -7,22 +7,22 @@ This package provides you three easy-to-use widgets -
 
 | Name | Description | Screenshot | 
 |--------|----------|---------- |
-|FluttermojiCircleAvatar | Use your fluttermoji anywhere in your Flutter app with a simple customizable widget. Supports material dark theme too.| ![1608830483994](https://user-images.githubusercontent.com/37346450/103071632-009ec100-45ea-11eb-97c4-96c9ec67e204.gif)
-|FluttermojiCustomizer | A comprehensize UI to customize the user's fluttermoji. Offers previews of each individual component and whose looks can be tweaked with a `FluttermojiThemeData`|![1608827561239](https://user-images.githubusercontent.com/37346450/154008536-a687828c-dc9d-4a62-aa11-b800d4fb7763.jpg)
-|FluttermojiSaveWidget | Renders a save button by default OR can be used as an [InkWell] wrapper for the [child] widget.|![1608827561239](https://user-images.githubusercontent.com/37346450/154008545-8325af7b-58a2-4419-8544-929ffbdbb9ff.jpg)
+|AvatarMakerCircleAvatar | Use your fluttermoji anywhere in your Flutter app with a simple customizable widget. Supports material dark theme too.| ![1608830483994](https://user-images.githubusercontent.com/37346450/103071632-009ec100-45ea-11eb-97c4-96c9ec67e204.gif)
+|AvatarMakerCustomizer | A comprehensize UI to customize the user's fluttermoji. Offers previews of each individual component and whose looks can be tweaked with a `AvatarMakerThemeData`|![1608827561239](https://user-images.githubusercontent.com/37346450/154008536-a687828c-dc9d-4a62-aa11-b800d4fb7763.jpg)
+|AvatarMakerSaveWidget | Renders a save button by default OR can be used as an [InkWell] wrapper for the [child] widget.|![1608827561239](https://user-images.githubusercontent.com/37346450/154008545-8325af7b-58a2-4419-8544-929ffbdbb9ff.jpg)
 
 ******
-The appearance of the widgets can be tweaked with `FluttermojiThemeData`. It let's you change things like the customizer's background colours, the box decoration etc.
+The appearance of the widgets can be tweaked with `AvatarMakerThemeData`. It let's you change things like the customizer's background colours, the box decoration etc.
 ******
 
-Use the given utility functions to send and receive Fluttermoji data from your server/DB efficiently.
+Use the given utility functions to send and receive AvatarMaker data from your server/DB efficiently.
 
 | Function Prototype | Description | 
 |------------------|---------------|
-|String decodeFluttermojifromString(String encodedData)| Decode your string containing the attributes to a SVG and render it by enclosing this string with a SvgPicture.string() | 
+|String decodeAvatarMakerfromString(String encodedData)| Decode your string containing the attributes to a SVG and render it by enclosing this string with a SvgPicture.string() | 
 | Future\<Map> encodeMySVGtoMap() | Encodes the local user's fluttermoji to a Map denoting the selected attributes |
 |Future\<String> encodeMySVGtoString() | Encodes the local user's fluttermoji to a Map denoting the selected attributes , and stringifies the result before returning the value. | 
-| Future<List<bool>> clearFluttermoji() | Erases local user's fluttermoji SVG String and selection from local storage |
+| Future<List<bool>> clearAvatarMaker() | Erases local user's fluttermoji SVG String and selection from local storage |
 	
 SVG Assets used are derived from [getavataaars.com](https://getavataaars.com/) .
 
@@ -49,13 +49,13 @@ SVG Assets used are derived from [getavataaars.com](https://getavataaars.com/) .
 	```dart
 	import 'package:unlockable_avatar_maker/fluttermoji.dart';
 	```
-3. Add the FluttermojiCircleAvatar widget to display your Fluttermoji where needed.
+3. Add the AvatarMakerCircleAvatar widget to display your AvatarMaker where needed.
 	```dart
-	FluttermojiCircleAvatar();
+	AvatarMakerCircleAvatar();
 	```
-4. To allow your users to personalize their Fluttermoji, add the following widget and pair it with the above one in your page.
+4. To allow your users to personalize their AvatarMaker, add the following widget and pair it with the above one in your page.
 	```dart
-	FluttermojiCustomizer();
+	AvatarMakerCustomizer();
 	```
 
 That's all it takes, simple right ? The two widgets communicate with each other and update in real-time throughout your widget tree.
@@ -63,11 +63,11 @@ That's all it takes, simple right ? The two widgets communicate with each other 
 ##  Usage Guidelines
 The package offers a ton of features in the simplest way possible, however there are some points worth noting.
 
-- `FluttermojiCircleAvatar` only renders the local user's avatar. To display the avatar of other users', you'll have to use the `SvgPicture.string()` method from `flutter_svg` .
-- `FluttermojiCircleAvatar` would render a default avatar until customized and saved by the local user for the first time.
+- `AvatarMakerCircleAvatar` only renders the local user's avatar. To display the avatar of other users', you'll have to use the `SvgPicture.string()` method from `flutter_svg` .
+- `AvatarMakerCircleAvatar` would render a default avatar until customized and saved by the local user for the first time.
 - Use the `canvaskit` renderer when building for web, the default `html` renderer will not work with SVGs.
 - The fluttermoji's attributes are saved to local app/browser storage. Clearing app/browser data would mean clearing these attributes as well.
-- You can create a `FluttermojiThemeData` instance to configure the look and feel of the widgets to your liking.
+- You can create a `AvatarMakerThemeData` instance to configure the look and feel of the widgets to your liking.
 
 ## Attributions
 

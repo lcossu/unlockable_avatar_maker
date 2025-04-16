@@ -1,5 +1,5 @@
 /// SVG strings for style of avatar
-class FluttermojiBackground {
+class AvatarMakerBackground {
   static Map<String, dynamic> bgColor = {
     "Transparent": "",
     "Black": "#262E33",
@@ -40,7 +40,7 @@ class FluttermojiBackground {
     }
   }
 }
-// const fluttermojiStyle = {
+// const avatarMakerStyle = {
 //   "Transparent": "",
 //   "Circle": '''
 //         <g id="Circle" stroke-width="1" fill-rule="evenodd" transform="translate(12.000000, 40.000000)" class="__WebInspectorHideElement__">

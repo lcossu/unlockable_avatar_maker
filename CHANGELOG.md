@@ -5,8 +5,8 @@
  * Minor bug fix [#22](https://github.com/psk907/unlockable_avatar_maker/pull/22#issue-1250729612)
 
 ## [1.0.0] - 15/02/2022
- * Adds `FluttermojiThemeData` and `FluttermojiSaveWidget` to the library.
- * Fixes some visual glithes in the appbar of the `FluttermojiCustomizer`.
+ * Adds `AvatarMakerThemeData` and `AvatarMakerSaveWidget` to the library.
+ * Fixes some visual glithes in the appbar of the `AvatarMakerCustomizer`.
  * Minor internal refactoring.
  * Updates dependency versions
  * BREAKING CHANGES 
@@ -22,12 +22,12 @@
 
 ## [0.2.2] - 11/10/2021
 
- * Adds toggle to show/hide save button widget in `FluttermojiCustomizer` widget.
+ * Adds toggle to show/hide save button widget in `AvatarMakerCustomizer` widget.
   
 ## [0.2.1] - 03/05/2021
 
  * Fixes bug where preview and avatars don't revert to saved version after unsaved edits
- * Adds `clearFluttermoji()` to FluttermojiFunctions
+ * Adds `clearAvatarMaker()` to AvatarMakerFunctions
  * Some optimizations
 
 ## [0.2.0] - 08/04/2021
@@ -48,18 +48,18 @@
 
 ## [0.1.2] - 19/01/2021
 
- * Fixed a bug in decodeFluttermojifromString()
+ * Fixed a bug in decodeAvatarMakerfromString()
 
 ## [0.1.1] - 01/01/2021
 
- * Added Material Dark theme support to FluttermojiCircleAvatar
+ * Added Material Dark theme support to AvatarMakerCircleAvatar
  * Added screenshots to the README.md
 
 ## [0.1.0] - 24/12/2020
 
 * Added documentation to many APIs and to the README.md as well.
-* Created new utility functions to allow sharing of Fluttermojis to server/DB and decoding them for render using flutter_svg package.
-* Fixed the bug on loading Fluttermoji on first launch.
+* Created new utility functions to allow sharing of AvatarMakers to server/DB and decoding them for render using flutter_svg package.
+* Fixed the bug on loading AvatarMaker on first launch.
 * Fixed standalone customizer issues.
 * Description updates
 * Other minor changes and fixes.
