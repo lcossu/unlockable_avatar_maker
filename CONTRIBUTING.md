@@ -47,12 +47,12 @@ $ flutter run
 ```
 
 ## Step 5 : Add and Commit changes
-- IMPORTANT: You need to be in the project root folder _(not in `fluttermoji/example/` )_ for all git commands.
+- IMPORTANT: You need to be in the project root folder _(not in `unlockable_avatar_maker/example/` )_ for all git commands.
 ```
 # To go back to the project root from example folder
 $ cd ..
 ```
-  > or you can just launch a new terminal window in `fluttermoji/` folder 
+  > or you can just launch a new terminal window in `unlockable_avatar_maker/` folder 
 
 - Add all the files/folders needed.
 - After you've made changes or made your contribution to the project add changes to the branch you've just created by:

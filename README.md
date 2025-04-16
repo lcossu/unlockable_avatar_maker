@@ -1,5 +1,5 @@
 # fluttermoji  <img src="https://user-images.githubusercontent.com/37346450/103101129-1b9a2100-463c-11eb-8a94-b6fbe44bf00f.png" align="right" height="150" />
-![Pub Version](https://img.shields.io/pub/v/fluttermoji) [![Generic badge](https://img.shields.io/badge/demo-LIVE-green.svg)](https://psk907.github.io/fluttermoji/) [![GitHub stars](https://img.shields.io/github/stars/psk907/fluttermoji?style=social)](https://github.com/psk907/fluttermoji/stargazers) [![GitHub stars](https://img.shields.io/badge/DM-me-blue?style=flat&logo=telegram)](https://t.me/psk907)
+![Pub Version](https://img.shields.io/pub/v/fluttermoji) [![Generic badge](https://img.shields.io/badge/demo-LIVE-green.svg)](https://psk907.github.io/unlockable_avatar_maker/) [![GitHub stars](https://img.shields.io/github/stars/psk907/fluttermoji?style=social)](https://github.com/psk907/unlockable_avatar_maker/stargazers) [![GitHub stars](https://img.shields.io/badge/DM-me-blue?style=flat&logo=telegram)](https://t.me/psk907)
 
 A light-weight and highly customizable SVG graphic set for Flutter, which provides a Customizer Widget, CircleAvatar and other utility functions.
 
@@ -47,7 +47,7 @@ SVG Assets used are derived from [getavataaars.com](https://getavataaars.com/) .
 	```
 2. Add the following import to your .dart file
 	```dart
-	import 'package:fluttermoji/fluttermoji.dart';
+	import 'package:unlockable_avatar_maker/fluttermoji.dart';
 	```
 3. Add the FluttermojiCircleAvatar widget to display your Fluttermoji where needed.
 	```dart

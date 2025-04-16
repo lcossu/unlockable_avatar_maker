@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttermoji/fluttermojiCustomizer.dart';
+import 'package:unlockable_avatar_maker/fluttermojiCustomizer.dart';
 
 /// Defines the configuration of the overall visual [theme] for a [FluttermojiCustomizer]
 /// and the widgets within it.

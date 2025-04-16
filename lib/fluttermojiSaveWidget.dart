@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttermoji/fluttermojiController.dart';
-import 'package:fluttermoji/fluttermojiThemeData.dart';
+import 'package:unlockable_avatar_maker/fluttermojiController.dart';
+import 'package:unlockable_avatar_maker/fluttermojiThemeData.dart';
 import 'package:get/get.dart';
 
 /// Renders a save button by default OR can be used as a [InkWell]
