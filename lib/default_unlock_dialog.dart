@@ -21,4 +21,4 @@ class DefaultUnlockDialog extends StatelessWidget {
   }
 }
 
-Widget buildDefaultUnlockDialog(_,__) => DefaultUnlockDialog();
+Widget buildDefaultUnlockDialog(context, index, attribute) => DefaultUnlockDialog();

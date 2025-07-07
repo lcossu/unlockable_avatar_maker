@@ -140,7 +140,7 @@ class NewPage extends StatelessWidget {
                 child: AvatarMakerCustomizer(
                   scaffoldWidth: min(600, _width * 0.85),
                   autosave: false,
-                  buildUnlockDialog: (p0, p1) => AlertDialog.adaptive(
+                  buildUnlockDialog: (context, p0, p1) => AlertDialog.adaptive(
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),

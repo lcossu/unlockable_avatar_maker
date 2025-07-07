@@ -92,7 +92,9 @@ class AvatarMakerCustomizer extends StatefulWidget {
   /// widget builder for the unlock dialog. Index is the element's index
   /// in the attribute grid, attribute is the type of element.
   /// Should return true if unlock is to be performed and false/Null if not.
-  final Widget Function(int index, AttributeItem attribute) buildUnlockDialog;
+  final Widget Function(
+          BuildContext context, int index, AttributeItem attribute)
+      buildUnlockDialog;
 
   @override
   _AvatarMakerCustomizerState createState() => _AvatarMakerCustomizerState();
@@ -141,7 +143,8 @@ class _AvatarMakerCustomizerState extends State<AvatarMakerCustomizer>
       } else {
         bool? go = await showDialog(
           context: context,
-          builder: (context) => widget.buildUnlockDialog(index, attribute),
+          builder: (context) =>
+              widget.buildUnlockDialog(context, index, attribute),
         );
         if (go != null && go)
           setState(() {
@@ -270,37 +273,39 @@ class _AvatarMakerCustomizerState extends State<AvatarMakerCustomizer>
       int? i = avatarMakerController.selectedOptions[attribute.key];
 
       /// Build the main Tile Grid with all the options from the attribute
-      var _tileGrid = GridView.builder(
-        physics: widget.theme.scrollPhysics,
-        itemCount: attributeListLength,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: gridCrossAxisCount,
-          crossAxisSpacing: 4.0,
-          mainAxisSpacing: 4.0,
-        ),
-        itemBuilder: (BuildContext context, int index) => InkWell(
-          onTap: () => onTapOption(index, i, attribute),
-          child: Container(
-            decoration: index == i
-                ? widget.theme.selectedTileDecoration
-                : widget.theme.unselectedTileDecoration,
-            margin: widget.theme.tileMargin,
-            padding: widget.theme.tilePadding,
-            child: Stack(children: [
-              Positioned.fill(
-                child: SvgPicture.string(
-                  avatarMakerController.getComponentSVG(attribute.key, index),
-                  height: 20,
-                  semanticsLabel: 'Your AvatarMaker',
-                  placeholderBuilder: (context) => Center(
-                    child: CupertinoActivityIndicator(),
+      var _tileGrid = Scrollbar(
+        child: GridView.builder(
+          physics: widget.theme.scrollPhysics,
+          itemCount: attributeListLength,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: gridCrossAxisCount,
+            crossAxisSpacing: 4.0,
+            mainAxisSpacing: 4.0,
+          ),
+          itemBuilder: (BuildContext context, int index) => InkWell(
+            onTap: () => onTapOption(index, i, attribute),
+            child: Container(
+              decoration: index == i
+                  ? widget.theme.selectedTileDecoration
+                  : widget.theme.unselectedTileDecoration,
+              margin: widget.theme.tileMargin,
+              padding: widget.theme.tilePadding,
+              child: Stack(children: [
+                Positioned.fill(
+                  child: SvgPicture.string(
+                    avatarMakerController.getComponentSVG(attribute.key, index),
+                    height: 20,
+                    semanticsLabel: 'Your AvatarMaker',
+                    placeholderBuilder: (context) => Center(
+                      child: CupertinoActivityIndicator(),
+                    ),
                   ),
                 ),
-              ),
-              if (!avatarMakerController
-                  .unlockedElements[attribute.key]![index])
-                Positioned(top: 1, child: Icon(Icons.lock))
-            ]),
+                if (!avatarMakerController
+                    .unlockedElements[attribute.key]![index])
+                  Positioned(top: 1, child: Icon(Icons.lock))
+              ]),
+            ),
           ),
         ),
       );
